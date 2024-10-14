@@ -34,7 +34,9 @@ async function main() {
 		fileData.forEach((game) => {
 			let id: number;
 			if (game.slug && game.name) {
-				let hash = createHash('md5').update(game.slug, 'binary').digest('hex');
+				let hash = createHash('md5')
+					.update(game.slug + String(game.bGGid), 'binary')
+					.digest('hex');
 				id = parseInt(BigInt.asUintN(64, BigInt('0x' + hash)).toString());
 
 				let reviewText: string = getReviewText(game.bGGid, game.slug);
@@ -44,7 +46,18 @@ async function main() {
 					reviewText += '<a href="' + amazonURL + '">Call to Action</a>';
 				}
 
-				let row: WPImport = new WPImport(id, game.name, reviewText, game.classifications, [], game.slug, 2);
+				let row: WPImport = new WPImport(
+					id, // TODO: work out better strategy or allow WP to create it
+					game.name, // TODO: include "review"
+					reviewText, // TODO: HTML and/or DIVI tags
+					game.classifications, // TODO: include "Review", listicle type, etc
+					game.credits, // decide where these go
+					game.slug, // TODO: avoid duplicate slugs
+					1
+					// TODO: Images?
+					// Maybe TODO: post date? currently just random in last 30 days
+					// Maybe TODO: post time: once imports are automatic, spread out the times on post so they are not all the same
+				);
 				outputData.push(row);
 			}
 		});
