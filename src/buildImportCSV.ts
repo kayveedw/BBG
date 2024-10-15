@@ -1,23 +1,11 @@
 import { writeToPath } from '@fast-csv/format';
 
 import { createHash } from 'crypto';
-import { existsSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 
 import { BBGGame } from './classes/bbggame';
 import { WPImport } from './classes/wpimport';
-import { loadBGGID2AmazonMapping } from './amazonMapping';
-
-function getReviewText(id: number, slug: string): string {
-	let reviewText: string = '';
-
-	const REVIEW_FOLDER: string = './reviews/';
-
-	let reviewPath: string = REVIEW_FOLDER + String(id) + '_' + slug + '_Review.txt';
-	if (existsSync(reviewPath)) {
-		reviewText = readFileSync(reviewPath, 'utf8');
-	}
-	return reviewText;
-}
+import { getReviewText } from './formatReview';
 
 async function main() {
 	process.argv.push('./data/BBG/RankedGames.json'); // TEMP for testing/debugging
@@ -26,8 +14,6 @@ async function main() {
 	} else {
 		const INPUT_FILE: string = process.argv[2];
 		let fileData: BBGGame[] = JSON.parse(readFileSync(INPUT_FILE, 'utf8'));
-
-		let bGGID2AmazonMapping: Map<number, string> = loadBGGID2AmazonMapping();
 
 		let outputData: WPImport[] = [];
 
@@ -39,12 +25,7 @@ async function main() {
 					.digest('hex');
 				id = parseInt(BigInt.asUintN(64, BigInt('0x' + hash)).toString());
 
-				let reviewText: string = getReviewText(game.bGGid, game.slug);
-
-				let amazonURL: string | undefined = bGGID2AmazonMapping.get(game.bGGid);
-				if (amazonURL) {
-					reviewText += '<a href="' + amazonURL + '">Call to Action</a>';
-				}
+				let reviewText: string = getReviewText(game);
 
 				let row: WPImport = new WPImport(
 					id, // TODO: work out better strategy or allow WP to create it
@@ -53,7 +34,7 @@ async function main() {
 					game.classifications, // TODO: include "Review", listicle type, etc
 					game.credits, // decide where these go
 					game.slug, // TODO: avoid duplicate slugs
-					1
+					1 // BBGAdmin
 					// TODO: Images?
 					// Maybe TODO: post date? currently just random in last 30 days
 					// Maybe TODO: post time: once imports are automatic, spread out the times on post so they are not all the same
