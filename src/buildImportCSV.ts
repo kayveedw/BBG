@@ -27,6 +27,8 @@ async function main() {
 
 				let reviewText: string = getReviewText(game);
 
+				game.classifications.push('Reviews');
+
 				let row: WPImport = new WPImport(
 					id, // TODO: work out better strategy or allow WP to create it
 					game.name, // TODO: include "review"
