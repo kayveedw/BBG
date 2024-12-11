@@ -27,13 +27,13 @@ async function main() {
 
 				let reviewText: string = getReviewText(game);
 
-				game.classifications.push('Reviews');
+				game.classifications.push('Reviews'); // TODO: include others such as listicle type, etc
 
 				let row: WPImport = new WPImport(
 					id, // TODO: work out better strategy or allow WP to create it
-					game.name, // TODO: include "review"
+					game.name + ' - Board Game Review',
 					reviewText, // TODO: HTML and/or DIVI tags
-					game.classifications, // TODO: include "Review", listicle type, etc
+					game.classifications,
 					game.credits, // decide where these go
 					game.slug, // TODO: avoid duplicate slugs
 					1 // BBGAdmin
