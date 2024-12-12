@@ -59,9 +59,9 @@ function formatReview(plainText: string, game: BBGGame): string {
 	// Title Row
 	desktopSection += `[et_pb_row_inner admin_label="Title Row" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][et_pb_column_inner saved_specialty_column_type="3_4" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][et_pb_post_title admin_label="Post Title" meta="off" featured_image="off" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][/et_pb_post_title][/et_pb_column_inner][/et_pb_row_inner]`;
 	// Top Call to Action Row
-	if (amazonURL) {
-		desktopSection += `[et_pb_row_inner admin_label="Call to Action Row" _builder_version="4.27.4" _module_preset="default" custom_margin="0px||0px||false|false" custom_padding="0px||0px||false|false" hover_enabled="0" global_colors_info="{}" sticky_enabled="0"][et_pb_column_inner saved_specialty_column_type="3_4" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" admin_label="Call To Action" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" hover_enabled="0" global_colors_info="{}" sticky_enabled="0"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta][/et_pb_column_inner][/et_pb_row_inner]`;
-	}
+	// if (amazonURL) {
+	desktopSection += `[et_pb_row_inner admin_label="Call to Action Row" _builder_version="4.27.4" _module_preset="default" custom_margin="0px||0px||false|false" custom_padding="0px||0px||false|false" hover_enabled="0" global_colors_info="{}" sticky_enabled="0"][et_pb_column_inner saved_specialty_column_type="3_4" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" admin_label="Call To Action" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" hover_enabled="0" global_colors_info="{}" sticky_enabled="0"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta][/et_pb_column_inner][/et_pb_row_inner]`;
+	// }
 
 	// Begin with the start of the Mobile & Tablet Section container
 	mobileAndTabletSection += `[et_pb_section fb_built="1" disabled_on="off|off|on" admin_label="Mobile & Tablet Section" _builder_version="4.27.4" _module_preset="default" width="100%" max_width="100%" collapsed="off" global_colors_info="{}"]`;
@@ -70,9 +70,9 @@ function formatReview(plainText: string, game: BBGGame): string {
 	// Title row
 	mobileAndTabletSection += `[et_pb_post_title meta="off" featured_image="off" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][/et_pb_post_title]`;
 	// Call to action Row
-	if (amazonURL) {
-		mobileAndTabletSection += `[et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" custom_margin="||50px||false|false" custom_padding="||||false|false" global_colors_info="{}"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta]`;
-	}
+	// if (amazonURL) {
+	mobileAndTabletSection += `[et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" custom_margin="||50px||false|false" custom_padding="||||false|false" global_colors_info="{}"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta]`;
+	// }
 
 	let regex: RegExp = /\n?.+:\n/gi; // Match headings, for example 'Overview:'
 	let headings: string[] = [];
@@ -182,9 +182,9 @@ function formatReview(plainText: string, game: BBGGame): string {
 	// Footer Row
 	desktopSection += `[et_pb_row_inner admin_label="Footer Row" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"]`;
 	// Bottom Call to Action Row
-	if (amazonURL) {
-		desktopSection += `[et_pb_column_inner admin_label="Call To Action" saved_specialty_column_type="3_4" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" custom_margin="||50px||false|false" custom_padding="||||false|false" global_colors_info="{}"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta]`;
-	}
+	// if (amazonURL) {
+	desktopSection += `[et_pb_column_inner admin_label="Call To Action" saved_specialty_column_type="3_4" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" custom_margin="||50px||false|false" custom_padding="||||false|false" global_colors_info="{}"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta]`;
+	// }
 	// Other games in category
 	desktopSection += `[et_pb_text _builder_version="4.27.4" _module_preset="default" text_text_color="#FFFFFF" header_text_color="#FFFFFF" header_2_text_color="#FFFFFF" background_color="#E02B20" custom_padding="10px|10px|2px|10px|false|false" global_colors_info="{}"]<h2>Search For Other Games Listed In The Same Categories</h2>[/et_pb_text]`;
 	desktopSection += `[et_pb_post_title title="off" author="off" date="off" comments="off" featured_image="off" _builder_version="4.27.4" _module_preset="default" meta_font_size="16px" global_colors_info="{}"][/et_pb_post_title][/et_pb_column_inner][/et_pb_row_inner]`;
@@ -193,9 +193,9 @@ function formatReview(plainText: string, game: BBGGame): string {
 	desktopSection += `[/et_pb_column][/et_pb_section]`;
 
 	// Bottom Call to Action
-	if (amazonURL) {
-		mobileAndTabletSection += `[et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" custom_margin="||50px||false|false" custom_padding="||||false|false" global_colors_info="{}"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta]`;
-	}
+	// if (amazonURL) {
+	mobileAndTabletSection += `[et_pb_cta title="Price Checker" button_url="${amazonURL}" button_text="Check Prices" _builder_version="4.27.4" _module_preset="default" header_font_size="30px" background_color="#E02B20" width="84%" module_alignment="center" custom_margin="||50px||false|false" custom_padding="||||false|false" global_colors_info="{}"]<h4>Check the price of ${game.name} across the web.</h4>[/et_pb_cta]`;
+	// }
 	// Other games in category
 	mobileAndTabletSection += `[et_pb_text _builder_version="4.27.4" _module_preset="default" text_text_color="#FFFFFF" text_line_height="2em" header_text_color="#FFFFFF" header_2_text_color="#FFFFFF" background_color="#E02B20" custom_padding="10px|10px|10px|10px|false|false" global_colors_info="{}"]<h2>Search For Other Games Listed In The Same Categories</h2>[/et_pb_text]`;
 	mobileAndTabletSection += `[et_pb_post_title title="off" author="off" date="off" comments="off" featured_image="off" _builder_version="4.27.4" _module_preset="default" meta_font_size="16px" global_colors_info="{}"][/et_pb_post_title]`;
