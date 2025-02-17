@@ -40,6 +40,7 @@ const ratingDescriptions: string[][] = [
 		'Highly Recommended',
 	], // 80-90
 	['Superb', 'Top notch', 'Must Have', 'An Instant Classic', 'Amazing', 'Sensational', 'A Sheer Delight'], // 90-100
+	['Flawless', 'Ultimate', 'Perfection', 'GOAT'], // 100
 ];
 
 function formatReview(plainText: string, game: BBGGame): string {
@@ -119,17 +120,32 @@ function formatReview(plainText: string, game: BBGGame): string {
 			// Conclusion section is different and contains rating items
 
 			let ratingDescription: String = '';
+			let funFactorRating: number = 0;
+			let replayabilityRating: number = 0;
+			let setupTimeRating: number = 0;
+			let newAndCasualRating: number = 0;
+			let youngGamersRating: number = 0;
+
 			if (game.rating) {
 				let ratingWords = ratingDescriptions[Math.floor(game.rating / 10)];
 				let wordIndex: number = Math.floor(Math.random() * ratingWords.length);
 				ratingDescription = ratingWords[wordIndex];
+
+				funFactorRating = Math.floor(game.rating + (-5 + Math.random() * 10));
+				replayabilityRating = Math.floor(game.rating + (-5 + Math.random() * 10));
+				setupTimeRating = Math.floor(game.rating + (-5 + Math.random() * 10));
+				newAndCasualRating = Math.floor(game.rating + (-5 + Math.random() * 10));
+				youngGamersRating = Math.floor(game.rating + (-5 + Math.random() * 10));
 			}
 
-			let funFactorRating: number = Math.round(Math.random() * 100);
-			let replayabilityRating: number = Math.round(Math.random() * 100);
-			let setupTimeRating: number = Math.round(Math.random() * 100);
-			let newAndCasualRating: number = Math.round(Math.random() * 100);
-			let youngGamersRating: number = Math.round(Math.random() * 100);
+			// Ensure the score in the text is the same as game.rating
+			let regex: RegExp = /User Score.*( [0-9]?[0-9]+)\/100/gi; // Match in either case user score [something] XX/100, for example User Score: 68/100 or user score of 10/100, etc.
+			let results = paragraph.matchAll(regex);
+			let result = results.next();
+			while (result.done == false) {
+				paragraph = paragraph.replaceAll(result.value[1] + '/100', ' ' + game.rating + '/100');
+				result = results.next();
+			}
 
 			desktopSection += `[et_pb_row_inner column_structure="1_2,1_2" admin_label="Conclusion Row" _builder_version="4.27.4" _module_preset="default" background_color="#f7f7f7" global_colors_info="{}"][et_pb_column_inner type="1_2" saved_specialty_column_type="3_4" _builder_version="4.27.4" _module_preset="default" custom_padding="|||25px|false|false" global_colors_info="{}"][et_pb_heading title="${heading}" admin_label="Section Heading H2" _builder_version="4.27.4" _module_preset="default" title_level="h2" global_colors_info="{}"][/et_pb_heading][et_pb_text admin_label="Paragraph 1" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"]<p><span>${paragraph}</span></p>[/et_pb_text][/et_pb_column_inner][et_pb_column_inner type="1_2" saved_specialty_column_type="3_4" _builder_version="4.27.4" _module_preset="default" custom_padding="|25px|||false|false" global_colors_info="{}"][et_pb_text admin_label="Rating Label" _builder_version="4.27.4" _module_preset="default" custom_margin="||0px||false|false" custom_padding="||0px||false|false" global_colors_info="{}"]<h2 style="text-align: center;">Our Score</h2>[/et_pb_text][et_pb_number_counter title="${ratingDescription}" number="${game.rating}" percent_sign="off" admin_label="Rating Animation" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][/et_pb_number_counter]`;
 			desktopSection += `[et_pb_counters admin_label="Rating Bars" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}"][et_pb_counter percent="${funFactorRating}" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}" bar_background_color_default="#7EBEC5" use_percentages="on"]Fun Factor[/et_pb_counter][et_pb_counter percent="${replayabilityRating}" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}" bar_background_color_default="#7EBEC5" use_percentages="on"]Replayability[/et_pb_counter][et_pb_counter percent="${setupTimeRating}" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}" bar_background_color_default="#7EBEC5" use_percentages="on"]Setup Time[/et_pb_counter][et_pb_counter percent="${newAndCasualRating}" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}" bar_background_color_default="#7EBEC5" use_percentages="on"]New & Casual Friendly[/et_pb_counter][et_pb_counter percent="${youngGamersRating}" _builder_version="4.27.4" _module_preset="default" global_colors_info="{}" bar_background_color_default="#7EBEC5" use_percentages="on"]Suitable for young gamers?[/et_pb_counter][/et_pb_counters][/et_pb_column_inner][/et_pb_row_inner]`;

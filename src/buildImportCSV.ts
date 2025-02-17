@@ -27,20 +27,35 @@ async function main() {
 
 				let reviewText: string = getReviewText(game);
 
-				game.classifications.push('Reviews'); // TODO: include others such as listicle type, etc
+				game.classifications = amendCategories(game.classifications);
 
 				let row: WPImport = new WPImport(
 					id, // TODO: work out better strategy or allow WP to create it
 					game.name + ' - Board Game Review',
-					reviewText, // TODO: HTML and/or DIVI tags
+					reviewText,
 					game.classifications,
 					game.credits, // decide where these go
 					game.slug, // TODO: avoid duplicate slugs
-					1 // BBGAdmin
+					4 // thebosslogin
 					// TODO: Images?
 					// Maybe TODO: post date? currently just random in last 30 days
 					// Maybe TODO: post time: once imports are automatic, spread out the times on post so they are not all the same
 				);
+				if (game.minimumPlayerAge) {
+					row.minimum_age = game.minimumPlayerAge;
+				}
+				if (game.minimumPlayers) {
+					row.minimum_players = game.minimumPlayers;
+				}
+				if (game.maximumPlayers) {
+					row.maximum_players = game.maximumPlayers;
+				}
+				if (game.rating) {
+					row.rating = game.rating;
+				}
+				if (game.type) {
+					row.game_type = game.type;
+				}
 				outputData.push(row);
 			}
 		});
@@ -53,6 +68,24 @@ async function main() {
 			quoteColumns: true,
 		}).on('error', (error) => console.error(error));
 	}
+}
+
+function amendCategories(categoryList: string[]): string[] {
+	// Remove any Admin catgegories from the list
+	let index: number;
+	do {
+		index = categoryList.findIndex((name) => name.startsWith('Admin:'));
+		if (index != -1) {
+			categoryList.splice(index, 1);
+		}
+	} while (index != -1);
+
+	categoryList = categoryList.map((x) => x.replace('Age: ', '')); // Remove Age: prefix
+	categoryList = categoryList.map((x) => x.replace('Ancient: ', '')); // Remove Ancient: prefix
+
+	categoryList.push('Reviews'); // TODO: include others such as listicle type, etc
+
+	return categoryList;
 }
 
 main();

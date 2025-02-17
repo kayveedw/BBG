@@ -3,14 +3,15 @@
 
 -- = Categories and Tags
 -- bbgdb_termmeta? It is currently empty
--- X) Delete term relationships linked to posts
+-- 1) Delete links between terms and posts
 DELETE tr FROM bbgdb_term_relationships AS tr LEFT JOIN bbgdb_posts AS p ON p.ID = tr.object_id WHERE p.post_type = 'post';
 -- Is it necessary to also delete relationships where the term is a category or tag?
 
--- X) Delete terms of taxonimy post_tag or category from bbgdb_terms
-DELETE t FROM bbgdb_terms AS t LEFT JOIN bbgdb_term_taxonomy AS tt ON tt.term_id = t.term_id WHERE tt.taxonomy = 'category' OR tt.taxonomy = 'post_tag';
--- X) Delete categories and tags from bbgdb_term_taxaonomy
-DELETE FROM bbgdb_term_taxonomy  WHERE taxonomy = 'category' OR taxonomy = 'post_tag';
+-- Skip 2 & 3 now that Marc has set up the hierarchy
+-- -- 2) Delete terms of taxonimy post_tag or category from bbgdb_terms
+-- DELETE t FROM bbgdb_terms AS t LEFT JOIN bbgdb_term_taxonomy AS tt ON tt.term_id = t.term_id WHERE tt.taxonomy = 'category' OR tt.taxonomy = 'post_tag';
+-- -- 3) Delete categories and tags from bbgdb_term_taxaonomy
+-- DELETE FROM bbgdb_term_taxonomy  WHERE taxonomy = 'category' OR taxonomy = 'post_tag';
 
 -- = Posts =
 -- 1) Delete revision to posts from bbgdb_posts
